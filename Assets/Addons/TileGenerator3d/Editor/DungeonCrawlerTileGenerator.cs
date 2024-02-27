@@ -8,8 +8,8 @@ public class DungeonCrawlerTileGenerator : EditorWindow
     public Material floorMaterial;
     public Material ceilingMaterial;
     public Material wallMaterial;
-    public int gridSize = 3;
-    public float ceilingHeight = 3;
+    public int TileSize = 3;
+    public float TileHeight = 3;
 
     [MenuItem("Tools/Dungeon Crawler Tile Prefab Generator")]
     public static void ShowWindow()
@@ -23,8 +23,8 @@ public class DungeonCrawlerTileGenerator : EditorWindow
         floorMaterial = (Material)EditorGUILayout.ObjectField("Floor Material", floorMaterial, typeof(Material), false);
         ceilingMaterial = (Material)EditorGUILayout.ObjectField("Ceiling Material", ceilingMaterial, typeof(Material), false);
         wallMaterial = (Material)EditorGUILayout.ObjectField("Wall Material", wallMaterial, typeof(Material), false);
-        gridSize = EditorGUILayout.IntField("Grid Size", gridSize);
-        ceilingHeight = EditorGUILayout.FloatField("Tile Height", ceilingHeight);
+        TileSize = EditorGUILayout.IntField("Tile Size", TileSize);
+        TileHeight = EditorGUILayout.FloatField("Tile Height", TileHeight);
 
         if (GUILayout.Button("Generate Prefabs"))
         {
@@ -40,7 +40,7 @@ public class DungeonCrawlerTileGenerator : EditorWindow
             return;
         }
 
-        string basePath = $"Assets/Generated/Tiles_{gridSize}x{gridSize}x{ceilingHeight}/";
+        string basePath = $"Assets/Generated/Tiles_{TileSize}x{TileSize}x{TileHeight}/";
         string meshPath = basePath + "Meshes";
         Directory.CreateDirectory(basePath);
         Directory.CreateDirectory(meshPath);
@@ -70,7 +70,7 @@ public class DungeonCrawlerTileGenerator : EditorWindow
             int[][] triangles;
             Vector2[] uvs;
 
-            CreateTileMeshData(gridSize, i, out vertices, out triangles, out uvs);
+            CreateTileMeshData(TileSize, i, out vertices, out triangles, out uvs);
 
             mesh.vertices = vertices;
             mesh.uv = uvs;
@@ -137,10 +137,10 @@ public class DungeonCrawlerTileGenerator : EditorWindow
         // Ceiling
         int vertexOffset = verticesList.Count;
 
-        verticesList.Add(new Vector3(-halfSize, ceilingHeight, halfSize));
-        verticesList.Add(new Vector3(halfSize, ceilingHeight, halfSize));
-        verticesList.Add(new Vector3(halfSize, ceilingHeight, -halfSize));
-        verticesList.Add(new Vector3(-halfSize, ceilingHeight, -halfSize));
+        verticesList.Add(new Vector3(-halfSize, TileHeight, halfSize));
+        verticesList.Add(new Vector3(halfSize, TileHeight, halfSize));
+        verticesList.Add(new Vector3(halfSize, TileHeight, -halfSize));
+        verticesList.Add(new Vector3(-halfSize, TileHeight, -halfSize));
 
         trianglesCeiling.AddRange(new int[] { vertexOffset + 0, vertexOffset + 2, vertexOffset + 1, vertexOffset + 0, vertexOffset + 3, vertexOffset + 2 });
 
@@ -157,23 +157,23 @@ public class DungeonCrawlerTileGenerator : EditorWindow
         Vector3[] wallVertices = new Vector3[]
         {
             new Vector3(halfSize, 0, halfSize),
-            new Vector3(halfSize, ceilingHeight, halfSize),
-            new Vector3(halfSize, ceilingHeight, -halfSize),
+            new Vector3(halfSize, TileHeight, halfSize),
+            new Vector3(halfSize, TileHeight, -halfSize),
             new Vector3(halfSize, 0, -halfSize),
 
             new Vector3(-halfSize, 0, -halfSize),
-            new Vector3(-halfSize, ceilingHeight, -halfSize),
-            new Vector3(-halfSize, ceilingHeight, halfSize),
+            new Vector3(-halfSize, TileHeight, -halfSize),
+            new Vector3(-halfSize, TileHeight, halfSize),
             new Vector3(-halfSize, 0, halfSize),
 
             new Vector3(-halfSize, 0, -halfSize),
-            new Vector3(-halfSize, ceilingHeight, -halfSize),
-            new Vector3(halfSize, ceilingHeight, -halfSize),
+            new Vector3(-halfSize, TileHeight, -halfSize),
+            new Vector3(halfSize, TileHeight, -halfSize),
             new Vector3(halfSize, 0, -halfSize),
 
             new Vector3(-halfSize, 0, halfSize),
-            new Vector3(-halfSize, ceilingHeight, halfSize),
-            new Vector3(halfSize, ceilingHeight, halfSize),
+            new Vector3(-halfSize, TileHeight, halfSize),
+            new Vector3(halfSize, TileHeight, halfSize),
             new Vector3(halfSize, 0, halfSize),
         };
 
